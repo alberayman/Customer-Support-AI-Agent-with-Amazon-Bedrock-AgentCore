@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+aws/
+*.zip
+.lab-creds
+.bedrock_agentcore.yaml
+phase2_outputs.json
+shapes.py
+shapes2.py
+main.py.starter
+UDACITY_PROJECT_BRIEF.md
+.bedrock_agentcore/
