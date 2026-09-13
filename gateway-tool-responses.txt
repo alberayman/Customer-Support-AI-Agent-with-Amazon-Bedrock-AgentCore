@@ -1,0 +1,150 @@
+Connecting to https://customersupportgateway-k1n2iynlsq.gateway.bedrock-agentcore.us-east-1.amazonaws.com/mcp
+
+Gateway advertises 6 tools:
+  - order-tracker___get_customer
+  - order-tracker___get_customer_orders
+  - order-tracker___get_order
+  - refund-processor___check_refund_status
+  - refund-processor___get_return_label
+  - refund-processor___initiate_refund
+
+── Order lookup — shipped order
+   tool: order-tracker___get_order
+   args: {"order_id": "ORD-001"}
+   verdict: OK — non-empty, valid structured JSON
+   response:
+     {
+       "order_id": "ORD-001",
+       "customer_id": "CUST-123",
+       "status": "SHIPPED",
+       "items": [
+         {
+           "name": "Wireless Headphones Pro",
+           "qty": 1,
+           "price": 89.99
+         }
+       ],
+       "total": 89.99,
+       "tracking_number": "TRK987654321",
+       "carrier": "UPS",
+       "estimated_delivery": "2026-09-15"
+     }
+
+── Order lookup — delivered order
+   tool: order-tracker___get_order
+   args: {"order_id": "ORD-002"}
+   verdict: OK — non-empty, valid structured JSON
+   response:
+     {
+       "order_id": "ORD-002",
+       "customer_id": "CUST-123",
+       "status": "DELIVERED",
+       "items": [
+         {
+           "name": "Kindle Paperwhite",
+           "qty": 1,
+           "price": 139.99
+         }
+       ],
+       "total": 139.99,
+       "tracking_number": "TRK123456789",
+       "carrier": "USPS",
+       "delivered_date": "2026-09-10"
+     }
+
+── Customer profile — tier and points
+   tool: order-tracker___get_customer
+   args: {"customer_id": "CUST-123"}
+   verdict: OK — non-empty, valid structured JSON
+   response:
+     {
+       "name": "Jane Smith",
+       "loyalty_points": 4250,
+       "tier": "Gold"
+     }
+
+── All orders for a customer
+   tool: order-tracker___get_customer_orders
+   args: {"customer_id": "CUST-123"}
+   verdict: OK — non-empty, valid structured JSON
+   response:
+     {
+       "customer_id": "CUST-123",
+       "orders": [
+         {
+           "order_id": "ORD-001",
+           "customer_id": "CUST-123",
+           "status": "SHIPPED",
+           "items": [
+             {
+               "name": "Wireless Headphones Pro",
+               "qty": 1,
+               "price": 89.99
+             }
+           ],
+           "total": 89.99,
+           "tracking_number": "TRK987654321",
+           "carrier": "UPS",
+           "estimated_delivery": "2026-09-15"
+         },
+         {
+           "order_id": "ORD-002",
+           "customer_id": "CUST-123",
+           "status": "DELIVERED",
+           "items": [
+             {
+               "name": "Kindle Paperwhite",
+               "qty": 1,
+               "price": 139.99
+             }
+           ],
+           "total": 139.99,
+           "tracking_number": "TRK123456789",
+           "carrier": "USPS",
+           "delivered_date": "2026-09-10"
+         }
+       ]
+     }
+
+── Refund initiation
+   tool: refund-processor___initiate_refund
+   args: {"order_id": "ORD-002", "reason": "damaged on arrival", "amount": 139.99}
+   verdict: OK — non-empty, valid structured JSON
+   response:
+     {
+       "statusCode": 200,
+       "body": "{\"refund_id\": \"REF-6JB6DISO\", \"order_id\": \"ORD-002\", \"status\": \"APPROVED\", \"amount\": 139.99, \"message\": \"Refund approved. Credit appears in 3-5 business days.\", \"created_at\": \"2026-09-13T14:57:55.461416\"}"
+     }
+
+── Prepaid return label
+   tool: refund-processor___get_return_label
+   args: {"order_id": "ORD-002"}
+   verdict: OK — non-empty, valid structured JSON
+   response:
+     {
+       "statusCode": 200,
+       "body": "{\"order_id\": \"ORD-002\", \"label_url\": \"https://returns.amazon.com/label/ORD-002\", \"carrier\": \"UPS\", \"valid_until\": \"2025-12-31\"}"
+     }
+
+── Refund status lookup
+   tool: refund-processor___check_refund_status
+   args: {"refund_id": "REF-TEST0001"}
+   verdict: OK — non-empty, valid structured JSON
+   response:
+     {
+       "statusCode": 200,
+       "body": "{\"refund_id\": \"REF-TEST0001\", \"status\": \"PROCESSING\", \"eta\": \"2-3 business days\"}"
+     }
+
+── NEGATIVE CONTROL — non-existent order ID
+   tool: order-tracker___get_order
+   args: {"order_id": "ORD-999"}
+   verdict: ERROR PATH (expected for the negative control)
+   response:
+     An internal error occurred. Please retry later.
+
+====================================================================
+7 of 7 valid calls returned a non-empty, well-formed payload.
+====================================================================
+
+Wrote gateway-tool-responses.md

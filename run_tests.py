@@ -60,6 +60,13 @@ SCENARIOS = {
     6: ("Browser Tool",
         "Rubric: agent retrieves content from a live web page.",
         [("Go to https://www.udacity.com and tell me the page title.", None)]),
+
+    7: ("Gateway Failure Handling (controlled failure)",
+        "Rubric: a failing tool produces a clear message naming the failed "
+        "operation and a next step, and the agent stays responsive.",
+        [("What is the status of order ORD-999?", None),
+         ("Thanks. While I have you — what is the return window for "
+          "standard items?", None)]),
 }
 
 

@@ -1,0 +1,52 @@
+
+====================================================================
+SUCCESS PATH — AgentCore Code Interpreter
+Arithmetic executed in the sandbox via code_session().invoke('executeCode').
+====================================================================
+{
+  "order_total": 450.0,
+  "tier": "Gold",
+  "tier_discount_rate": 0.1,
+  "tier_discount_pct": 10.0,
+  "points_redeemed": 4000,
+  "points_value_usd": 40.0,
+  "tier_discount": 41.0,
+  "final_total": 369.0,
+  "total_savings": 81.0,
+  "points_earned": 369,
+  "remaining_points": 250
+}
+
+Required fields present: ['final_total', 'points_redeemed', 'remaining_points', 'tier_discount_pct']
+All required fields present.
+
+====================================================================
+FALLBACK PATH — Code Interpreter unavailable
+code_session patched to raise, so the tool's except branch runs.
+====================================================================
+{
+  "order_total": 450.0,
+  "tier": "Gold",
+  "tier_discount_rate": 0.1,
+  "tier_discount_pct": 10.0,
+  "points_redeemed": 0,
+  "points_value_usd": 0.0,
+  "tier_discount": 45.0,
+  "final_total": 405.0,
+  "total_savings": 45.0,
+  "points_earned": 405,
+  "remaining_points": 4250,
+  "note": "Fallback calculation (tier discount only): Simulated Code Interpreter outage"
+}
+
+Required fields present: ['final_total', 'points_redeemed', 'remaining_points', 'tier_discount_pct']
+All required fields present.
+
+====================================================================
+KEY SET COMPARISON
+====================================================================
+Required fields in BOTH paths: True
+Keys in both (11): ['final_total', 'order_total', 'points_earned', 'points_redeemed', 'points_value_usd', 'remaining_points', 'tier', 'tier_discount', 'tier_discount_pct', 'tier_discount_rate', 'total_savings']
+Fallback-only keys: ['note']
+
+Wrote discount-tool-result.md

@@ -256,6 +256,7 @@ result = {{
     "order_total": round(order_total, 2),
     "tier": tier,
     "tier_discount_rate": tier_rate,
+    "tier_discount_pct": round(tier_rate * 100, 2),
     "points_redeemed": points_redeemed,
     "points_value_usd": points_value,
     "tier_discount": tier_discount,
@@ -288,6 +289,7 @@ print(json.dumps(result))
             "order_total": round(float(order_total), 2),
             "tier": str(tier).capitalize(),
             "tier_discount_rate": tier_rate,
+            "tier_discount_pct": round(tier_rate * 100, 2),
             "points_redeemed": 0,
             "points_value_usd": 0.0,
             "tier_discount": tier_discount,
@@ -319,7 +321,14 @@ Tool usage rules:
     4. action type "close" with the same session_name when finished
   Never call navigate before init_session.
 
-Always ground your answer in tool output. If a tool fails, say so plainly.
+Always ground your answer in tool output. Never invent order, refund or
+policy data.
+
+If a tool returns an error or an empty result, do NOT retry it more than once
+and do NOT guess. Tell the customer in one sentence which operation failed
+(for example "the order lookup failed"), state that no changes were made, and
+suggest one concrete next step — checking the ID, trying again shortly, or
+contacting support. Then continue helping with anything else you can.
 Be concise, friendly, and professional. Remember details the customer shares about
 themselves and use them in later turns."""
 
@@ -363,11 +372,45 @@ async def invoke(payload, context=None):
             agent_core_browser.browser,
         ]
 
-        mcp_client = MCPClient(lambda: streamable_http_client(GATEWAY_URL))
+        # ── Gateway connection ───────────────────────────────────────────
+        # Failures here are connection-level: the MCP endpoint is unreachable,
+        # timed out, or refused the session. The agent degrades to its local
+        # tools rather than failing the whole turn.
+        gateway_notice = ""
+        mcp_client = None
+        try:
+            mcp_client = MCPClient(lambda: streamable_http_client(GATEWAY_URL))
+            mcp_client.__enter__()
+        except Exception as e:
+            mcp_client = None
+            logger.error("Gateway connection failed: %s: %s", type(e).__name__, e)
+            gateway_notice = (
+                "Note: order tracking and refund services are temporarily "
+                f"unreachable (Gateway connection error: {type(e).__name__}). "
+                "I can still answer product, policy and loyalty questions. "
+                "Please retry order or refund requests in a few minutes."
+            )
 
-        with mcp_client:
-            gateway_tools = mcp_client.list_tools_sync()
-            tools.extend(gateway_tools)
+        try:
+            if mcp_client is not None:
+                # ── Tool discovery ───────────────────────────────────────────
+                # A FAILED Gateway target returns an empty list rather than
+                # raising, so an empty result is treated as a failure too.
+                try:
+                    gateway_tools = mcp_client.list_tools_sync()
+                    if not gateway_tools:
+                        raise RuntimeError("Gateway advertised no tools")
+                    tools.extend(gateway_tools)
+                    logger.info("Loaded %d Gateway tools", len(gateway_tools))
+                except Exception as e:
+                    logger.error("Gateway tool discovery failed: %s: %s",
+                                 type(e).__name__, e)
+                    gateway_notice = (
+                        "Note: I could not load the order and refund tools "
+                        f"(Gateway tool discovery failed: {type(e).__name__}). "
+                        "I can still answer product, policy and loyalty "
+                        "questions. Please retry in a few minutes."
+                    )
 
             agent = Agent(
                 model=model,
@@ -377,12 +420,28 @@ async def invoke(payload, context=None):
             )
 
             response = await agent.invoke_async(user_input)
+            answer = response.message["content"][0]["text"]
 
-        return response.message["content"][0]["text"]
+        finally:
+            if mcp_client is not None:
+                try:
+                    mcp_client.__exit__(None, None, None)
+                except Exception as e:
+                    logger.warning("Gateway session close failed: %s", e)
+
+        return f"{gateway_notice}\n\n{answer}" if gateway_notice else answer
 
     except Exception as e:
-        logger.error("Agent invocation failed: %s", e)
-        return f"Sorry, I hit an error handling that request: {e}"
+        # Last resort. Name the failure class and give the customer a next
+        # step rather than leaking a stack trace.
+        logger.error("Agent invocation failed: %s: %s", type(e).__name__, e)
+        return (
+            "I ran into a problem handling that request "
+            f"({type(e).__name__}). Nothing was changed on your account. "
+            "Please try again, and if it keeps happening contact support "
+            "with this reference: "
+            f"{session_id}."
+        )
 
 
 # ── CLI entry point (do not modify) ──────────────────────────────────────────

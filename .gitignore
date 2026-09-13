@@ -11,3 +11,5 @@ shapes2.py
 main.py.starter
 UDACITY_PROJECT_BRIEF.md
 .bedrock_agentcore/
+apply_review_fixes.py
+__pycache__/

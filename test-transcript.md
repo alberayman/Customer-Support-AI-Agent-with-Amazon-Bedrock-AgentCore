@@ -1,6 +1,6 @@
 # Customer Support Agent — Test Transcript
 
-Run: 2026-09-13T13:47:17  
+Run: 2026-09-13T15:01:50  
 Customer: `CUST-902`  
 Agent: `customer_support_agent` on Amazon Bedrock AgentCore Runtime
 
@@ -12,7 +12,7 @@ Every scenario uses a fresh session id. Test 4 deliberately uses two separate se
 
 _Rubric: Gateway tool invocation returns a well-formed response._
 
-**session:** `4fa53cb8-0f55-4c1f-bcfd-965d69f226aa`  
+**session:** `69546aea-e01d-4c84-bcb9-d9d966af43c4`  
 **customer_id:** `CUST-902-T1`
 
 **Prompt**
@@ -21,28 +21,28 @@ _Rubric: Gateway tool invocation returns a well-formed response._
 What is the status of order ORD-001?
 ```
 
-**Response** (16.1s)
+**Response** (15.7s)
 
 ```
 ╭──────────────────────────────────────────────────────────────────────────────────────── customer_support_agent ────────────────────────────────────────────────────────────────────────────────────────╮
-│ Session: 4fa53cb8-0f55-4c1f-bcfd-965d69f226aa                                                                                                                                                          │
-│ Request ID: 9aa72f62-2ba1-426b-bf07-a43de0d53ab0                                                                                                                                                       │
-│ ARN: arn:aws:bedrock-agentcore:us-east-1:<ACCOUNT_ID>:runtime/customer_support_agent-VOINqrBKHp                                                                                                        │
+│ Session: 69546aea-e01d-4c84-bcb9-d9d966af43c4                                                                                                                                                          │
+│ Request ID: 02344813-d5b3-4b83-83a0-825517cd3401                                                                                                                                                       │
+│ ARN: arn:aws:bedrock-agentcore:us-east-1:954184547791:runtime/customer_support_agent-VOINqrBKHp                                                                                                        │
 │ Logs: aws logs tail /aws/bedrock-agentcore/runtimes/customer_support_agent-VOINqrBKHp-DEFAULT --log-stream-name-prefix "2026/09/13/[runtime-logs" --follow                                             │
 │       aws logs tail /aws/bedrock-agentcore/runtimes/customer_support_agent-VOINqrBKHp-DEFAULT --log-stream-name-prefix "2026/09/13/[runtime-logs" --since 1h                                           │
 │ GenAI Dashboard: https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#gen-ai-observability/agent-core                                                                                       │
 ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 Response:
-The order ORD-001 is currently **SHIPPED**. Here are the details:
+Your order **ORD-001** for **Wireless Headphones Pro** is currently **SHIPPED**. 
 
-- **Items**: Wireless Headphones Pro (1 unit at $89.99)
-- **Total**: $89.99
+Here are the details:
 - **Carrier**: UPS
 - **Tracking Number**: TRK987654321
 - **Estimated Delivery**: September 15, 2026
+- **Total**: $89.99
 
-The order has been dispatched and is on its way to you!
+The order was shipped and is on its way to you!
 ```
 
 
@@ -50,7 +50,7 @@ The order has been dispatched and is on its way to you!
 
 _Rubric: second Gateway tool, Lambda target._
 
-**session:** `604e937c-bf76-4d46-b66d-3aa65e132e06`  
+**session:** `448d7c12-8204-4ee2-b20e-8a88eec4907f`  
 **customer_id:** `CUST-902-T2`
 
 **Prompt**
@@ -59,31 +59,31 @@ _Rubric: second Gateway tool, Lambda target._
 I want to return my Kindle Paperwhite from order ORD-002. It arrived with a cracked screen. Please process the refund.
 ```
 
-**Response** (14.5s)
+**Response** (14.0s)
 
 ```
 ╭──────────────────────────────────────────────────────────────────────────────────────── customer_support_agent ────────────────────────────────────────────────────────────────────────────────────────╮
-│ Session: 604e937c-bf76-4d46-b66d-3aa65e132e06                                                                                                                                                          │
-│ Request ID: d69be159-c004-4c7e-bec5-86920acd7ba2                                                                                                                                                       │
-│ ARN: arn:aws:bedrock-agentcore:us-east-1:<ACCOUNT_ID>:runtime/customer_support_agent-VOINqrBKHp                                                                                                        │
+│ Session: 448d7c12-8204-4ee2-b20e-8a88eec4907f                                                                                                                                                          │
+│ Request ID: ac98b42f-3b0f-456e-9e89-250ccf30fbff                                                                                                                                                       │
+│ ARN: arn:aws:bedrock-agentcore:us-east-1:954184547791:runtime/customer_support_agent-VOINqrBKHp                                                                                                        │
 │ Logs: aws logs tail /aws/bedrock-agentcore/runtimes/customer_support_agent-VOINqrBKHp-DEFAULT --log-stream-name-prefix "2026/09/13/[runtime-logs" --follow                                             │
 │       aws logs tail /aws/bedrock-agentcore/runtimes/customer_support_agent-VOINqrBKHp-DEFAULT --log-stream-name-prefix "2026/09/13/[runtime-logs" --since 1h                                           │
 │ GenAI Dashboard: https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#gen-ai-observability/agent-core                                                                                       │
 ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 Response:
-Perfect! I've processed your refund for the Kindle Paperwhite from order ORD-002. Here are the details:
+Perfect! I've processed your return and refund for your Kindle Paperwhite from order ORD-002. 
 
-✅ **Refund Approved**
-- **Refund ID:** REF-RCER5DWL
+**Refund Summary:**
+- **Refund ID:** REF-GWEDXZQL
 - **Order:** ORD-002 (Kindle Paperwhite)
-- **Amount:** $139.99
+- **Refund Amount:** $139.99
 - **Status:** APPROVED
-- **Credit will appear:** In 3-5 business days
+- **Credit Timeline:** Will appear in your account in 3-5 business days
 
-The refund has been initiated due to the cracked screen issue you reported. Your credit will be processed automatically within the next 3-5 business days.
+The refund has been approved due to the cracked screen you reported upon arrival. You'll receive the credit to your original payment method within the next 3-5 business days.
 
-Is there anything else I can help you with regarding this return or any other orders?
+Is there anything else I can help you with today?
 ```
 
 
@@ -91,7 +91,7 @@ Is there anything else I can help you with regarding this return or any other or
 
 _Rubric: search_knowledge_base calls the Retrieve API and grounds the answer._
 
-**session:** `0a8262e2-3a33-41ae-95f1-594e3106dbe9`  
+**session:** `802796b8-4510-4ba7-9cff-0875ec4b5876`  
 **customer_id:** `CUST-902-T3`
 
 **Prompt**
@@ -100,26 +100,32 @@ _Rubric: search_knowledge_base calls the Retrieve API and grounds the answer._
 What are the benefits of the Platinum loyalty tier?
 ```
 
-**Response** (13.4s)
+**Response** (14.2s)
 
 ```
 ╭──────────────────────────────────────────────────────────────────────────────────────── customer_support_agent ────────────────────────────────────────────────────────────────────────────────────────╮
-│ Session: 0a8262e2-3a33-41ae-95f1-594e3106dbe9                                                                                                                                                          │
-│ Request ID: 83815c3e-3316-4aec-a56c-f431f1e6518c                                                                                                                                                       │
-│ ARN: arn:aws:bedrock-agentcore:us-east-1:<ACCOUNT_ID>:runtime/customer_support_agent-VOINqrBKHp                                                                                                        │
+│ Session: 802796b8-4510-4ba7-9cff-0875ec4b5876                                                                                                                                                          │
+│ Request ID: b14b6f8d-f2e2-45b3-b59f-8ff681525d59                                                                                                                                                       │
+│ ARN: arn:aws:bedrock-agentcore:us-east-1:954184547791:runtime/customer_support_agent-VOINqrBKHp                                                                                                        │
 │ Logs: aws logs tail /aws/bedrock-agentcore/runtimes/customer_support_agent-VOINqrBKHp-DEFAULT --log-stream-name-prefix "2026/09/13/[runtime-logs" --follow                                             │
 │       aws logs tail /aws/bedrock-agentcore/runtimes/customer_support_agent-VOINqrBKHp-DEFAULT --log-stream-name-prefix "2026/09/13/[runtime-logs" --since 1h                                           │
 │ GenAI Dashboard: https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#gen-ai-observability/agent-core                                                                                       │
 ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 Response:
-The Platinum loyalty tier offers several benefits, including:
+Based on the loyalty program information I found, the Platinum tier offers these key benefits:
 
+**Platinum Tier Benefits:**
 - **Free same-day shipping** on eligible orders
-- **15% discount** on purchases
+- **15% discount** on purchases (higher than Gold tier's 10% discount)
 - **Priority customer support** for faster assistance
 
-These benefits are designed to provide a premium experience for our most loyal customers.
+The Platinum tier requires **5000 or more loyalty points** to achieve. Points can be earned at different rates depending on the product category:
+- Standard items: 1 point per $1 spent
+- Amazon devices: 2 points per $1 spent  
+- Amazon Fresh: 5 points per $1 spent
+
+You can redeem points at a rate of **100 points = $1 discount**, with a minimum redemption of 500 points. Points remain valid for **2 years from the date earned**.
 ```
 
 
@@ -127,7 +133,7 @@ These benefits are designed to provide a premium experience for our most loyal c
 
 _Rubric: cross-session recall — two separate sessions, same customer._
 
-**session A:** `29f7294b-efce-4201-86d7-42d8e333f934`  
+**session A:** `44f7d70c-478a-4497-8912-c809db2e6d15`  
 **customer_id:** `CUST-902-T4`
 
 **Prompt**
@@ -136,26 +142,26 @@ _Rubric: cross-session recall — two separate sessions, same customer._
 Hi, I am Jane. I prefer concise responses.
 ```
 
-**Response** (10.5s)
+**Response** (14.1s)
 
 ```
 ╭──────────────────────────────────────────────────────────────────────────────────────── customer_support_agent ────────────────────────────────────────────────────────────────────────────────────────╮
-│ Session: 29f7294b-efce-4201-86d7-42d8e333f934                                                                                                                                                          │
-│ Request ID: 57923188-5150-45e9-a818-f254d2fd2e4b                                                                                                                                                       │
-│ ARN: arn:aws:bedrock-agentcore:us-east-1:<ACCOUNT_ID>:runtime/customer_support_agent-VOINqrBKHp                                                                                                        │
+│ Session: 44f7d70c-478a-4497-8912-c809db2e6d15                                                                                                                                                          │
+│ Request ID: 488c3db8-d677-4d07-ba59-707c35e927b5                                                                                                                                                       │
+│ ARN: arn:aws:bedrock-agentcore:us-east-1:954184547791:runtime/customer_support_agent-VOINqrBKHp                                                                                                        │
 │ Logs: aws logs tail /aws/bedrock-agentcore/runtimes/customer_support_agent-VOINqrBKHp-DEFAULT --log-stream-name-prefix "2026/09/13/[runtime-logs" --follow                                             │
 │       aws logs tail /aws/bedrock-agentcore/runtimes/customer_support_agent-VOINqrBKHp-DEFAULT --log-stream-name-prefix "2026/09/13/[runtime-logs" --since 1h                                           │
 │ GenAI Dashboard: https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#gen-ai-observability/agent-core                                                                                       │
 ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 Response:
-Hello Jane! I'll keep my responses concise. How can I assist you today?
+Hello Jane! I've noted your preference for concise responses. How can I help you today?
 ```
 
 
 *Waited 180s between sessions for asynchronous memory extraction.*
 
-**session B:** `c948f6c4-c580-4381-8359-108b5625c479`  
+**session B:** `b1ad4b36-0598-4842-8168-ad62dc3cd81a`  
 **customer_id:** `CUST-902-T4`
 
 **Prompt**
@@ -164,13 +170,13 @@ Hello Jane! I'll keep my responses concise. How can I assist you today?
 Do you remember my name and my communication preference?
 ```
 
-**Response** (14.9s)
+**Response** (16.0s)
 
 ```
 ╭──────────────────────────────────────────────────────────────────────────────────────── customer_support_agent ────────────────────────────────────────────────────────────────────────────────────────╮
-│ Session: c948f6c4-c580-4381-8359-108b5625c479                                                                                                                                                          │
-│ Request ID: 6dcf1d8b-51ea-4508-8305-28df9cd5b1c7                                                                                                                                                       │
-│ ARN: arn:aws:bedrock-agentcore:us-east-1:<ACCOUNT_ID>:runtime/customer_support_agent-VOINqrBKHp                                                                                                        │
+│ Session: b1ad4b36-0598-4842-8168-ad62dc3cd81a                                                                                                                                                          │
+│ Request ID: a38cecd8-aa07-4fa1-8c69-8d098e657b40                                                                                                                                                       │
+│ ARN: arn:aws:bedrock-agentcore:us-east-1:954184547791:runtime/customer_support_agent-VOINqrBKHp                                                                                                        │
 │ Logs: aws logs tail /aws/bedrock-agentcore/runtimes/customer_support_agent-VOINqrBKHp-DEFAULT --log-stream-name-prefix "2026/09/13/[runtime-logs" --follow                                             │
 │       aws logs tail /aws/bedrock-agentcore/runtimes/customer_support_agent-VOINqrBKHp-DEFAULT --log-stream-name-prefix "2026/09/13/[runtime-logs" --since 1h                                           │
 │ GenAI Dashboard: https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#gen-ai-observability/agent-core                                                                                       │
@@ -185,7 +191,7 @@ Yes, Jane. I remember you prefer concise responses.
 
 _Rubric: sandboxed arithmetic, structured breakdown._
 
-**session:** `d91708de-cdb8-411b-87f0-d153c31eda29`  
+**session:** `4540dea7-fca6-4cfc-9d25-03a1340f8f40`  
 **customer_id:** `CUST-902-T5`
 
 **Prompt**
@@ -194,31 +200,40 @@ _Rubric: sandboxed arithmetic, structured breakdown._
 I am a Gold member with 4250 points. My order total is $450 for standard items. Calculate my discount and final price.
 ```
 
-**Response** (17.2s)
+**Response** (14.4s)
 
 ```
 ╭──────────────────────────────────────────────────────────────────────────────────────── customer_support_agent ────────────────────────────────────────────────────────────────────────────────────────╮
-│ Session: d91708de-cdb8-411b-87f0-d153c31eda29                                                                                                                                                          │
-│ Request ID: 9f58b93e-d602-478a-a62d-219d87f7fb3a                                                                                                                                                       │
-│ ARN: arn:aws:bedrock-agentcore:us-east-1:<ACCOUNT_ID>:runtime/customer_support_agent-VOINqrBKHp                                                                                                        │
+│ Session: 4540dea7-fca6-4cfc-9d25-03a1340f8f40                                                                                                                                                          │
+│ Request ID: c8405e0b-b129-4010-bd51-f4e3bfc78d8a                                                                                                                                                       │
+│ ARN: arn:aws:bedrock-agentcore:us-east-1:954184547791:runtime/customer_support_agent-VOINqrBKHp                                                                                                        │
 │ Logs: aws logs tail /aws/bedrock-agentcore/runtimes/customer_support_agent-VOINqrBKHp-DEFAULT --log-stream-name-prefix "2026/09/13/[runtime-logs" --follow                                             │
 │       aws logs tail /aws/bedrock-agentcore/runtimes/customer_support_agent-VOINqrBKHp-DEFAULT --log-stream-name-prefix "2026/09/13/[runtime-logs" --since 1h                                           │
 │ GenAI Dashboard: https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#gen-ai-observability/agent-core                                                                                       │
 ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 Response:
-Here's your discount breakdown and final price:
+Here's your loyalty discount breakdown and final price:
 
-**Original Order Total:** $450.00  
-**Gold Member Discount:** 10% ($45.00)  
-**Points Redeemed:** 4,000 points ($40.00 value)  
-**Total Savings:** $85.00  
+**Your Order Details:**
+- Original total: $450.00
+- Membership tier: Gold
+- Points balance: 4,250 points
 
-**Final Price:** $369.00  
-**Points Earned:** 369 points  
-**Remaining Points:** 250 points
+**Discounts Applied:**
+- Tier discount (10%): $45.00
+- Points redemption (4,000 points): $40.00
+- **Total discounts:** $85.00
 
-As a Gold member, you received both a 10% tier discount and were able to apply your points toward the purchase, saving you a total of $85.00.
+**Final Price:**
+- **$369.00** (you save $81.00)
+
+**Loyalty Points Update:**
+- Points used: 4,000
+- Points earned from this purchase: 369
+- Remaining points: 250
+
+Your Gold membership provided you with significant savings on this order!
 ```
 
 
@@ -226,7 +241,7 @@ As a Gold member, you received both a 10% tier discount and were able to apply y
 
 _Rubric: agent retrieves content from a live web page._
 
-**session:** `139f1aad-89e5-42f9-94d0-ec0a0defcd48`  
+**session:** `42e8854a-5c08-4a3c-803c-72b5e9826a0f`  
 **customer_id:** `CUST-902-T6`
 
 **Prompt**
@@ -235,18 +250,89 @@ _Rubric: agent retrieves content from a live web page._
 Go to https://www.udacity.com and tell me the page title.
 ```
 
-**Response** (34.7s)
+**Response** (33.4s)
 
 ```
 ╭──────────────────────────────────────────────────────────────────────────────────────── customer_support_agent ────────────────────────────────────────────────────────────────────────────────────────╮
-│ Session: 139f1aad-89e5-42f9-94d0-ec0a0defcd48                                                                                                                                                          │
-│ Request ID: 43baeeb0-be2b-453e-bb77-25faddff895a                                                                                                                                                       │
-│ ARN: arn:aws:bedrock-agentcore:us-east-1:<ACCOUNT_ID>:runtime/customer_support_agent-VOINqrBKHp                                                                                                        │
+│ Session: 42e8854a-5c08-4a3c-803c-72b5e9826a0f                                                                                                                                                          │
+│ Request ID: 986f644a-24fc-4f2f-aca7-a0262444e0a5                                                                                                                                                       │
+│ ARN: arn:aws:bedrock-agentcore:us-east-1:954184547791:runtime/customer_support_agent-VOINqrBKHp                                                                                                        │
 │ Logs: aws logs tail /aws/bedrock-agentcore/runtimes/customer_support_agent-VOINqrBKHp-DEFAULT --log-stream-name-prefix "2026/09/13/[runtime-logs" --follow                                             │
 │       aws logs tail /aws/bedrock-agentcore/runtimes/customer_support_agent-VOINqrBKHp-DEFAULT --log-stream-name-prefix "2026/09/13/[runtime-logs" --since 1h                                           │
 │ GenAI Dashboard: https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#gen-ai-observability/agent-core                                                                                       │
 ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 Response:
-The page title of https://www.udacity.com is: **"Learn the Latest Tech Skills; Advance Your Career | Udacity"**
+The page title of https://www.udacity.com is "Learn the Latest Tech Skills; Advance Your Career | Udacity".
+```
+
+
+## Test 7 — Gateway Failure Handling (controlled failure)
+
+_Rubric: a failing tool produces a clear message naming the failed operation and a next step, and the agent stays responsive._
+
+**session:** `d6b1a381-3502-47db-96b2-a2302ae7054b`  
+**customer_id:** `CUST-902-T7`
+
+**Prompt**
+
+```
+What is the status of order ORD-999?
+```
+
+**Response** (15.0s)
+
+```
+╭──────────────────────────────────────────────────────────────────────────────────────── customer_support_agent ────────────────────────────────────────────────────────────────────────────────────────╮
+│ Session: d6b1a381-3502-47db-96b2-a2302ae7054b                                                                                                                                                          │
+│ Request ID: bc15389b-241e-477f-bdda-2002323eaf75                                                                                                                                                       │
+│ ARN: arn:aws:bedrock-agentcore:us-east-1:954184547791:runtime/customer_support_agent-VOINqrBKHp                                                                                                        │
+│ Logs: aws logs tail /aws/bedrock-agentcore/runtimes/customer_support_agent-VOINqrBKHp-DEFAULT --log-stream-name-prefix "2026/09/13/[runtime-logs" --follow                                             │
+│       aws logs tail /aws/bedrock-agentcore/runtimes/customer_support_agent-VOINqrBKHp-DEFAULT --log-stream-name-prefix "2026/09/13/[runtime-logs" --since 1h                                           │
+│ GenAI Dashboard: https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#gen-ai-observability/agent-core                                                                                       │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+Response:
+The order lookup for ORD-999 failed due to an internal error. This means I couldn't retrieve the order status at this moment.
+
+To help you get the status of your order, I recommend:
+
+1. **Checking the order ID**: Please confirm that ORD-999 is the correct order ID.
+
+2. **Trying again later**: The system might be temporarily unavailable. You can try again in a few minutes.
+
+3. **Alternative options**: If this is urgent, you can:
+   - Check your email for order confirmation or shipping notifications
+   - Log in to your Amazon account to view order details
+   - Contact Amazon customer service directly
+
+Would you like me to try looking up the order again now, or would you prefer one of the alternative approaches? If you'd like me to try again, please confirm the order ID is correct.
+```
+
+**session:** `d6b1a381-3502-47db-96b2-a2302ae7054b`  
+**customer_id:** `CUST-902-T7`
+
+**Prompt**
+
+```
+Thanks. While I have you — what is the return window for standard items?
+```
+
+**Response** (6.7s)
+
+```
+╭──────────────────────────────────────────────────────────────────────────────────────── customer_support_agent ────────────────────────────────────────────────────────────────────────────────────────╮
+│ Session: d6b1a381-3502-47db-96b2-a2302ae7054b                                                                                                                                                          │
+│ Request ID: c4140ed4-ec81-4cdd-8e79-870ecf83422a                                                                                                                                                       │
+│ ARN: arn:aws:bedrock-agentcore:us-east-1:954184547791:runtime/customer_support_agent-VOINqrBKHp                                                                                                        │
+│ Logs: aws logs tail /aws/bedrock-agentcore/runtimes/customer_support_agent-VOINqrBKHp-DEFAULT --log-stream-name-prefix "2026/09/13/[runtime-logs" --follow                                             │
+│       aws logs tail /aws/bedrock-agentcore/runtimes/customer_support_agent-VOINqrBKHp-DEFAULT --log-stream-name-prefix "2026/09/13/[runtime-logs" --since 1h                                           │
+│ GenAI Dashboard: https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#gen-ai-observability/agent-core                                                                                       │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+Response:
+The return window for standard items is **30 days from the delivery date**. 
+
+This applies to most products unless they're categorized specifically as electronics, which have a shorter 15-day return window from delivery. All returned items must be in their original condition with
+all accessories included.
 ```
